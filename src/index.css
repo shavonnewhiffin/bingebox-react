@@ -706,15 +706,15 @@ h1 {
 }
 
 /* SKELETON LOADING STATES */
-.movie__img--wrapper-skeleton {
-  max-width: 269px;
-  width: 100%;
-}
-
-.movie__img--skeleton {
-  width: 100%;
-  height: auto;
-  color: lightgray;
+.movie__skeleton {
+  padding: 32px 32px;
+  cursor: pointer;
+  border: none;
+  border-radius: 24px;
+  margin: 32px;
+  background-color:lightgray;
+  width: 25%;
+  max-height: 471px;
 }
 
 /* MEDIA QUERIES LANDING PAGE*/
