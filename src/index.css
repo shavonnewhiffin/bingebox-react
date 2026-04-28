@@ -496,7 +496,7 @@ h1 {
   color: #fff;
 }
 
-.nav__bar {
+.browse__bar {
   height: 400px;
   background-color: grey;
   background-image: url("./assets/pexels-rpnickson-3131971.jpg");
@@ -507,11 +507,14 @@ h1 {
   position: relative;
 }
 
-.nav__bar--wrapper {
+.browse__bar--wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: -80px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .browse__input {
@@ -833,6 +836,17 @@ h1 {
   .landing__btn {
     width: 20%;
   }
+
+  .footer__logo--wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .footer__logo{
+    width: 70%;
+  }
 }
 
 /* SMART PHONES */
@@ -892,6 +906,28 @@ h3 {
 
 .movie {
     width: 35%;
+}
+
+/* XS Devices */
+@media (max-width: 470px) {
+
+.footer__links{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.footer__link {
+  margin: 6px
+
+}
+
+.footer__para {
+  font-size: 8px;
+  margin-top: 8px;
+}
+
 }
 
 }
