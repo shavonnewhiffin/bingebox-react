@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const SearchResults = () => {
   const [movies, setMovies] = useState([]);
@@ -41,26 +43,30 @@ const SearchResults = () => {
         </div>
         <div className="content__wrapper">
           <div className="movies movies__loading" id="movie__img--wrapper">
-            <i className="fa-solid fa-spinner movies__loading--spinner"></i>
-            {loading
-              ? new Array(10)
-                  .fill(0)
-                  .map((_, index) => (
-                    <div className="movie__skeleton" key={index}></div>
-                  ))
-              : movies.map((movie) => (
-                  <div className="movie" key={movie.imdbID}>
-                    <figure className="movie__img--wrapper">
-                      <img src={movie.Poster} alt="" className="movie__img" />
-                    </figure>
-                    <div className="movie__title">
-                      <span className="movie__details">{movie.Title}</span>
-                    </div>
-                    <div className="movie__year">
-                      <span>{movie.Year}</span>
-                    </div>
+            {loading ? (
+              <div>
+                <FontAwesomeIcon icon={faSpinner} className="fa-solid fa-spinner movies__loading--spinner"></FontAwesomeIcon>
+                {new Array(10).fill(0).map((_, index) => (
+                    <div className="movies__skeleton">
+                  <div className="movie__skeleton" key={index}></div>
                   </div>
                 ))}
+              </div>
+            ) : (
+              movies.map((movie) => (
+                <div className="movie" key={movie.imdbID}>
+                  <figure className="movie__img--wrapper">
+                    <img src={movie.Poster} alt="" className="movie__img" />
+                  </figure>
+                  <div className="movie__title">
+                    <span className="movie__details">{movie.Title}</span>
+                  </div>
+                  <div className="movie__year">
+                    <span>{movie.Year}</span>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
