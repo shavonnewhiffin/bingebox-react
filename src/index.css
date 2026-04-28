@@ -603,6 +603,7 @@ h1 {
   max-width: 1200px;
 }
 
+/* MOVIE CARD STYLING */
 .movies {
   display: flex;
   justify-content: center;
@@ -640,6 +641,11 @@ h1 {
 
 .movie__title {
   margin-top: 12px;
+  font-size: 16px;
+}
+
+.movie__year {
+  font-size: 14px;
 }
 
 .movie__img--wrapper {
@@ -699,9 +705,21 @@ h1 {
   display: block !important;
 }
 
+/* SKELETON LOADING STATES */
+.movie__img--wrapper-skeleton {
+  max-width: 269px;
+  width: 100%;
+}
+
+.movie__img--skeleton {
+  width: 100%;
+  height: auto;
+  color: lightgray;
+}
+
 /* MEDIA QUERIES LANDING PAGE*/
 
-/* SMALL DESKTOPS */
+/* SMALL DESKTOPS 992px and under */
 
 @media (max-width: 992px) {
   .landing__container {
@@ -765,7 +783,7 @@ h1 {
     width: 80%;}
 }
 
-/* TABLETS */
+/* TABLETS -772px and under */
 
 @media (max-width: 772px) {
 
@@ -849,7 +867,7 @@ h1 {
   }
 }
 
-/* SMART PHONES */
+/* SMART PHONES - 640px and under */
 
 @media (max-width:640px) {
 

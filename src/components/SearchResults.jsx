@@ -1,6 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const SearchResults = () => {
+
+    const [movies, setMovies] = useState([]);
+
+    async function fetchMovies() {
+        const { data } = await axios.get('https://www.omdbapi.com/?&apikey=d051fbc2&s=fast')
+        console.log(data.Search);
+        setMovies(data.Search);
+    }
+
+    useEffect(() => {
+        fetchMovies();
+    }, [])
+
+
   return (
     <div><section id="search">
     <div className="filter__content--wrapper">
@@ -20,24 +35,18 @@ const SearchResults = () => {
     <div className="content__wrapper">
     <div className="movies movies__loading" id="movie__img--wrapper">
         <i className="fa-solid fa-spinner movies__loading--spinner"></i>
-    {/* <!-- <div className="movie">
-        <figure className="movie__img--wrapper">
-            <img src="" alt="" className="movie__img">
-        </figure>
-        <div className="movie__title">
-            Title
-        </div>
-        <div className="movie__year">
-            Year
-        </div>
-        <div className="movie__rating">
-            <i className="fas fa-star"></i> 
-            <i className="fas fa-star"></i> 
-            <i className="fas fa-star"></i> 
-            <i className="fas fa-star"></i> 
-            <i className="fas fa-star-half-alt"></i> 
-        </div>
-    </div> --> */}
+    {movies.map((movie => (<div className="movie">
+<figure className="movie__img--wrapper">
+    <img src={movie.Poster} alt="" className="movie__img"/>
+</figure>
+<div className="movie__title">
+ <span className = "movie__details"> {movie.Title} </span>
+</div>
+<div className="movie__year">
+   <span className="">{movie.Year}</span> 
+</div>
+</div>)))
+    }
 </div>
 </div>
 </section>
