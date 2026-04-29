@@ -22,6 +22,10 @@ const Browse = () => {
         }
     }
 
+    async function searchMovies(searchId) {
+        const { data } = await axios.get(`https://www.omdbapi.com/?&apikey=d051fbc2&s=${searchId}`)
+    }
+
     function onSearch() {
         fetchMovies(searchId);
     }
@@ -79,8 +83,10 @@ const Browse = () => {
                 <div className="content__wrapper">
                     <div className="movies movies__loading" id="movie__img--wrapper">
                         {loading ? (
-                            <div>
-                                <FontAwesomeIcon icon={faSpinner} className="fa-solid fa-spinner movies__loading--spinner" />
+                            <div className="movies__skeleton">
+                                <div className="spinner__wrapper">
+                                    <FontAwesomeIcon icon={faSpinner} className="fa-solid fa-spinner movies__loading--spinner" />
+                                </div>
                                 {new Array(10).fill(0).map((_, index) => (
                                     <div className="movie__skeleton" key={index}></div>
                                 ))}
