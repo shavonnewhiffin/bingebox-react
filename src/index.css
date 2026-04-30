@@ -58,6 +58,7 @@ select {
   color: white;
   font-weight: 400;
   border: none;
+  outline: none;
 }
 
 h1 {
@@ -401,18 +402,6 @@ h1 {
   margin: 32px;
 }
 
-.filter__landing {
-  display: none;
-}
-
-.filter__landing.filter__landing--visible {
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 24px;
-}
-
 /* STREAMING SECTION */
 
 #streaming {
@@ -546,11 +535,13 @@ h1 {
 .search__wrapper {
   position: absolute;
   cursor: pointer;
-  right: 20px; /* move left/right */
-  top: 50%; /* vertical center */
+  right: 20px;
+  top: 50%;
   transform: translateY(-50%);
   color: #e61e21;
   font-size: 32px;
+  display: flex;
+  align-items: center;
 }
 
 .input__wrapper {
