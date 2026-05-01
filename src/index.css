@@ -402,6 +402,19 @@ h1 {
   margin: 32px;
 }
 
+/* Filter on Hero Section */
+.filter__landing {
+  display: none;
+}
+
+.filter__landing.filter__landing--visible {
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 24px;
+}
+
 /* STREAMING SECTION */
 
 #streaming {

@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
+import { fetchMovies } from "../utils/api";
 
 const Browse = () => {
   const [searchId, setSearchId] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  async function fetchMovies(searchTerm = "fast") {
+  async function search(searchTerm) {
     try {
       setLoading(true);
-
-      const { data } = await axios.get(
-        `https://www.omdbapi.com/?&apikey=d051fbc2&s=${encodeURIComponent(
-          searchTerm
-        )}`
-      );
-
-      console.log(data.Search);
-
-      // Empty array prevents React from crashing if Search returns with "undefined"
-      setMovies(data.Search || []);
+      const results = await fetchMovies(searchTerm);
+      setMovies(results);
     } catch {
       alert("Unable to fetch movies");
     } finally {
@@ -32,14 +23,12 @@ const Browse = () => {
     }
   }
 
-//   Function for search queries - .trim is to prevent users from searching with empty spaces. Reuses fetch movies.
+//   When user types in search field in searchId, pass that argument into the search function above.
   function onSearch() {
     if (!searchId.trim()) return;
-    fetchMovies(searchId);
+    search(searchId);
   }
 
-
-//   Function for filter button
   function filterMovies(event) {
     const filter = event.target.value;
     const sorted = [...movies];
@@ -57,7 +46,7 @@ const Browse = () => {
   }
 
   useEffect(() => {
-    fetchMovies();
+    search("fast");
   }, []);
 
   return (

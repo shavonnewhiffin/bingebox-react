@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { fetchMovies } from '../utils/api'
 import heroImg from '../assets/8.png'
 import streamingImg from '../assets/streamingplatforms.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,36 +7,41 @@ import { faSpinner, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 const Hero = () => {
     const containerRef = useRef(null);
+    const searchRef = useRef("");
+
+    const [loading, setLoading] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(()=>{
         containerRef.current.classList.add("visible");
     },[])
 
-    const searchBtn = document.getElementById("searchBtn");
-    const searchInput = document.getElementById("searchInput");
-    const resultsContainer = document.getElementById("resultsContainer");
-    const searchIcon = document.querySelector(".search");
-    const filterBox = document.getElementById("filter__box");
+
+
+    // const searchBtn = document.getElementById("searchBtn");
+    // const searchInput = document.getElementById("searchInput");
+    // const resultsContainer = document.getElementById("resultsContainer");
+    // const searchIcon = document.querySelector(".search");
+    // const filterBox = document.getElementById("filter__box");
     let movies = [];
     
 
 // Function to filter movies
 
-function filterMovies(event) {
-    const filter = event.target.value;
+// function filterMovies(event) {
+//     const filter = event.target.value;
   
-    if (filter === "A_TO_Z") {
-      movies.sort((a, b) => a.Title.localeCompare(b.Title));
-    } else if (filter === "Z_TO_A") {
-      movies.sort((a, b) => b.Title.localeCompare(a.Title));
-    } else if (filter === "NEWEST_TO_OLDEST") {
-      movies.sort((a, b) => b.Year - a.Year);
-    } else if (filter === "OLDEST_TO_NEWEST") {
-      movies.sort((a, b) => a.Year - b.Year);
-    }
+//     if (filter === "A_TO_Z") {
+//       movies.sort((a, b) => a.Title.localeCompare(b.Title));
+//     } else if (filter === "Z_TO_A") {
+//       movies.sort((a, b) => b.Title.localeCompare(a.Title));
+//     } else if (filter === "NEWEST_TO_OLDEST") {
+//       movies.sort((a, b) => b.Year - a.Year);
+//     } else if (filter === "OLDEST_TO_NEWEST") {
+//       movies.sort((a, b) => a.Year - b.Year);
+//     }
   
-    displayResults(movies);
-  }
+//   }
 
 
 // Display results of fetch
@@ -70,27 +76,18 @@ function movieHTML(movie) {
 
   // Search movies
 
-async function searchAPI(query) {
-    if (!query) return;
-    const endpoint = `https://www.omdbapi.com/?apikey=d051fbc2&s=${encodeURIComponent(
-      query
-    )}`; // Use encodeURIComponent for safe URL query parameters
-  
-    searchIcon.style.display = "none";
-    searchBtn.classList.add("landing__btn--loading");
-  
+async function searchAPI() {
+    if (!searchQuery.trim()) return;
+    setLoading(true);
     try {
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      searchBtn.classList.remove("landing__btn--loading");
-      searchIcon.style.display = "inline";
-      movies = data.Search || [];
+      const results = await fetchMovies(searchQuery);
+      movies = results;
       displayResults(movies);
     } catch (err) {
       console.error(err);
       resultsContainer.innerHTML = "<p>Something went wrong.</p>";
-      searchBtn.classList.remove("landing__btn--loading");
-      searchIcon.style.display = "inline";
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -104,10 +101,14 @@ async function searchAPI(query) {
           <div className="landing__container--bottom">
             <h2>Find the perfect show or movie in seconds. </h2>
             <div className="landing__input--wrapper">
-              <input type="search" placeholder="Search for a movie or TV show..." className="landing__input" id="searchInput" />
-              <button type="submit" className="landing__btn" id="searchBtn">
+              <input type="search" 
+              value={searchQuery}
+              onChange= {(event) => setSearchQuery(event.target.value)}
+              placeholder="Search for a movie or TV show..." className="landing__input" id="searchInput" ref={searchRef}/>
+              <button type="submit" className="landing__btn" onClick={searchAPI} id="searchBtn">
+                {loading ? <FontAwesomeIcon icon={faSpinner} className="fa-solid fa-spinner landing__btn--spinner"/> :
                 <FontAwesomeIcon icon={faMagnifyingGlass}className="fa-solid fa-magnifying-glass search"></FontAwesomeIcon>
-                <FontAwesomeIcon icon={faSpinner} className="fa-solid fa-spinner landing__btn--spinner"/>
+                }
               </button>
             </div>
           </div>
