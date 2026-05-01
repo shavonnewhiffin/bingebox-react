@@ -680,7 +680,6 @@ h1 {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  display: none;
 }
 
 .results__container.active {
@@ -712,13 +711,10 @@ h1 {
 }
 
 .landing__btn--spinner {
-  display: none !important;
   font-size: 32px;
 }
 
-.landing__btn--loading .landing__btn--spinner {
-  display: block !important;
-}
+
 
 /* SKELETON LOADING STATES */
 
@@ -746,6 +742,46 @@ h1 {
   margin: 32px;
   background-color:lightgray;
   aspect-ratio: 2/3;
+}
+
+/* MOVIES MODAL */
+
+.modal__container{
+position: fixed;
+display: flex;
+width: 100%;
+height: 100vh;
+top: 0;
+left: 0;
+justify-content: center;
+align-items: center;
+border: 1px solid green;
+visibility: hidden;
+opacity: 0;
+transition:opacity 0.5s, visibility 0.5s;
+}
+
+.modal__container--active{
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal{
+width: 90%;
+height: 90%;
+background-color: #e61e21;
+position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 50px;
+  right: 70px;
+  /* width: 30px;
+  height: 30px; */
+  cursor: pointer;
+  color: white;
+  font-size: 30px;
 }
 
 /* MEDIA QUERIES LANDING PAGE*/
