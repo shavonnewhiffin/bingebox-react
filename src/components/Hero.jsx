@@ -10,6 +10,7 @@ const Hero = () => {
     const searchRef = useRef("");
 
     const [loading, setLoading] = useState(false);
+    const [active, setActive] = useState (false);
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(()=>{
