@@ -4,6 +4,7 @@ import {
   faMagnifyingGlass,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
 import { fetchMovies } from "../utils/api";
 
 const Browse = () => {
@@ -34,13 +35,13 @@ const Browse = () => {
     const sorted = [...movies];
 
     if (filter === "A_TO_Z") {
-      sorted.sort((a, b) => a.Title.localeCompare(b.Title));
+      sorted.sort((a, b) => a.title.localeCompare(b.title));
     } else if (filter === "Z_TO_A") {
-      sorted.sort((a, b) => b.Title.localeCompare(a.Title));
+      sorted.sort((a, b) => b.title.localeCompare(a.title));
     } else if (filter === "NEWEST_TO_OLDEST") {
-      sorted.sort((a, b) => b.Year - a.Year);
+      sorted.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
     } else if (filter === "OLDEST_TO_NEWEST") {
-      sorted.sort((a, b) => a.Year - b.Year);
+      sorted.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
     }
     setMovies(sorted);
   }
@@ -119,17 +120,17 @@ const Browse = () => {
               </div>
             ) : (
               movies.map((movie) => (
-                <div className="movie" key={movie.imdbID}>
+                <Link to ={`/movie/${movie.id}`} className="movie" key={movie.id}>
                   <figure className="movie__img--wrapper">
-                    <img src={movie.Poster} alt="" className="movie__img" />
+                    <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="" className="movie__img" />
                   </figure>
                   <div className="movie__title">
-                    <span className="movie__details">{movie.Title}</span>
+                    <span className="movie__details">{movie.title}</span>
                   </div>
                   <div className="movie__year">
-                    <span>{movie.Year}</span>
+                    <span>{movie.release_date?.slice(0, 4)}</span>
                   </div>
-                </div>
+                </Link>
               ))
             )}
           </div>
