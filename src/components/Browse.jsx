@@ -35,13 +35,13 @@ const Browse = () => {
     const sorted = [...movies];
 
     if (filter === "A_TO_Z") {
-      sorted.sort((a, b) => a.title.localeCompare(b.title));
+      sorted.sort((a, b) => a.Title.localeCompare(b.Title));
     } else if (filter === "Z_TO_A") {
-      sorted.sort((a, b) => b.title.localeCompare(a.title));
+      sorted.sort((a, b) => b.Title.localeCompare(a.Title));
     } else if (filter === "NEWEST_TO_OLDEST") {
-      sorted.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+      sorted.sort((a, b) => b.Year - a.Year);
     } else if (filter === "OLDEST_TO_NEWEST") {
-      sorted.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+      sorted.sort((a, b) => a.Year - b.Year);
     }
     setMovies(sorted);
   }
@@ -120,15 +120,15 @@ const Browse = () => {
               </div>
             ) : (
               movies.map((movie) => (
-                <Link to ={`/movie/${movie.id}`} className="movie" key={movie.id}>
+                <Link to={`/movie/${movie.imdbID}`} className="movie" key={movie.imdbID}>
                   <figure className="movie__img--wrapper">
-                    <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="" className="movie__img" />
+                    <img src={movie.Poster} alt="" className="movie__img" />
                   </figure>
                   <div className="movie__title">
-                    <span className="movie__details">{movie.title}</span>
+                    <span className="movie__details">{movie.Title}</span>
                   </div>
                   <div className="movie__year">
-                    <span>{movie.release_date?.slice(0, 4)}</span>
+                    <span>{movie.Year}</span>
                   </div>
                 </Link>
               ))

@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom'
 
 const NavBar = () => {
 
+function clearSearch() {
+    sessionStorage.removeItem('movies');
+    sessionStorage.removeItem('searchQuery');
+}
+
 // Sandwich Menu
 function openMenu() {
     document.body.classList += " menu--open";
@@ -19,10 +24,10 @@ function openMenu() {
     <nav>
     <div className="nav__content">
             <figure className="nav__logo--wrapper">
-              <Link to="/"><img src={logo} alt="bingebox logo" className="nav__logo"/></Link>
+              <Link to="/" onClick={clearSearch}><img src={logo} alt="bingebox logo" className="nav__logo"/></Link>
              </figure>
              <div className="nav__links">
-               <Link to="/" className="nav__link link__hover-effect"><b> Home</b></Link>
+               <Link to="/" className="nav__link link__hover-effect" onClick={clearSearch}><b> Home</b></Link>
                  <Link to="/browse" className="nav__link link__hover-effect"><b>Browse</b></Link>
                  <Link to="#" className="nav__link link__hover-effect"><b>Trending</b></Link>
                  <Link to="/" className="nav__link link__hover-effect"><b>Contact</b></Link>

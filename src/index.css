@@ -8,10 +8,10 @@
 }
 
 :root {
-  --clr-1: #e61e21;
-  --clr-2: #80fffb;
-  --clr-3: #e47577;
-  --clr-4: #80fffb;;
+  --clr-1: black;
+  --clr-2: #fff;
+  --clr-3: #403d56;
+  --clr-4: black;;
   --clr-5: #e61e21;
 }
 
@@ -671,7 +671,9 @@ h2 {
 }
 
 .movie__year {
-  font-size: 14px;
+  font-size: 12px;
+  color: #e61e21;
+  margin-top: 4px;
 }
 
 .movie__img--wrapper {
@@ -768,7 +770,7 @@ h2 {
   left: 0;
   justify-content: center;
   align-items: center;
-  border: 1px solid green;
+  border: 1px solid #e61e21;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s, visibility 0.5s;
@@ -782,12 +784,12 @@ h2 {
 .modal {
   width: 80%;
   max-height: 90vh;
-  background-color: #e61e21;
+  background-color: ;
   position: relative;
   border-radius: 1%;
   display:flex;
   flex-wrap: wrap;
-  overflow: visible;
+  overflow-y: auto;
   /* Gradient animation */
   border: 1px solid;
   border-color: var(--clr-2);
@@ -869,10 +871,23 @@ h2 {
   cursor: pointer;
 }
 
+.modal__actions--button {
+  background: transparent;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 8px 20px;
+  cursor: pointer;
+  color: #e61e21;
+  background-color: transparent;
+
+}
 .modal__button {
   padding: 0 30px;
   border-radius: 20px;
   line-height: 1.25rem;
+  background: transparent;
+  color: white;
+  border-color: #e61e21;
 }
 
 .modal__mentions {
@@ -889,11 +904,13 @@ h2 {
 .modal h2 {
   text-align: left;
   margin-bottom: 8px;
+  color: white;
 
 }
 
 .modal h3 {
   font-size: 48px;
+  color: #e61e21;
 }
 
 .modal__button {
@@ -904,6 +921,48 @@ h2 {
   margin: 24px 0px;
 }
 
+.modal__bottom {
+  width: 100%;
+  height: auto;
+  padding: 24px;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--clr-3),
+    var(--clr-4),
+    var(--clr-5),
+    var(--clr-4),
+    var(--clr-3)
+  );
+  animation: rotation 30s linear infinite;
+}
+
+.modal__container--recommended {
+  padding: 24px 0px;
+
+}
+
+.modal .movie__title {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.modal .movie__details {
+  color: #403d56;
+  margin-bottom: 8px;
+}
+
+.modal .movie__selected--title--top{
+  color:#e61e21
+}
+
+.modal .movie__rating {
+  color: red;
+}
+
+.modal .movie__subdetails {
+  display: flex;
+}
 /* MEDIA QUERIES LANDING PAGE*/
 
 @media (max-width: 1440px) {

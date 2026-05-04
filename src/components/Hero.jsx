@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { fetchMovies } from "../utils/api";
 import { useNavigate } from "react-router-dom";
-import heroImg from "../assets/8.png";
+import heroImg from "../assets/6.png";
 import streamingImg from "../assets/streamingplatforms.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -38,16 +38,14 @@ const Hero = () => {
     //   Make a copy of the movies array to sort called sorted
       const sorted = [...movies];
 
-    if (filter === "A_TO_Z") {
+
+      if (filter === "A_TO_Z") {
         sorted.sort((a, b) => a.Title.localeCompare(b.Title));
-      }
-    else if (filter === "Z_TO_A") {
+      } else if (filter === "Z_TO_A") {
         sorted.sort((a, b) => b.Title.localeCompare(a.Title));
-      }
-    else if (filter === "NEWEST_TO_OLDEST") {
+      } else if (filter === "NEWEST_TO_OLDEST") {
         sorted.sort((a, b) => b.Year - a.Year);
-      }
-    else if (filter === "OLDEST_TO_NEWEST") {
+      } else if (filter === "OLDEST_TO_NEWEST") {
         sorted.sort((a, b) => a.Year - b.Year);
       }
     // Display the sorted array
