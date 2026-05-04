@@ -8,6 +8,7 @@ import {
   faSpinner,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
+import TrendingCarousel from "./TrendingCarousel";
 
 const Hero = () => {
   const containerRef = useRef(null);
@@ -173,6 +174,8 @@ const Hero = () => {
           </figure>
         </div>
       </section>
+      {/* Trending Section */}
+<TrendingCarousel />
     </>
   );
 };

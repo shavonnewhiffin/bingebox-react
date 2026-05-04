@@ -464,6 +464,48 @@ h2 {
   transform: translateY(-10px) translateX(4px) scale(1.05);
 }
 
+/* TRENDING */
+#trending {
+  background-color: #403d56;
+  padding: 64px;
+}
+
+.carousel {
+  margin: 100px auto;
+  width: 90%;
+  border: 5px solid red;
+  overflow: hidden;
+}
+
+.carousel__track {
+  display: flex;
+  animation: spin 5s infinite linear;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding-right: 1em;
+  flex-shrink: 0;
+}
+
+.card {
+  flex: 0 0 5em;
+  height: 5em;
+  padding: 1em;
+  background: cornflowerblue;
+  font-size: 3rem;
+  border-radius: .2em;
+  text-align: center;
+  align-content: center;
+}
+
+@keyframes spin {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 /* FOOTER */
 
 .footer__content {
@@ -875,7 +917,7 @@ h2 {
   background: transparent;
   border: 1px solid;
   border-radius: 20px;
-  padding: 8px 20px;
+  padding: 8px 2px;
   cursor: pointer;
   color: #e61e21;
   background-color: transparent;
@@ -925,15 +967,6 @@ h2 {
   width: 100%;
   height: auto;
   padding: 24px;
-  background: conic-gradient(
-    from var(--gradient-angle),
-    var(--clr-3),
-    var(--clr-4),
-    var(--clr-5),
-    var(--clr-4),
-    var(--clr-3)
-  );
-  animation: rotation 30s linear infinite;
 }
 
 .modal__container--recommended {
