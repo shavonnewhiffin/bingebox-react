@@ -65,18 +65,20 @@ useEffect(() => {
                       Recommended For You
                     </h2>
                     <div className="movies">
+                        {/* If a recommended movie is clicked, pass it's id and media type to the fetchImdbId function */}
                         {recommended.filter(recco => recco.poster_path).slice(0, 3).map((recco) => (
-                             <div className="movie" key={recco.id} onClick={() => fetchImdbId(recco.id).then(imdbId => navigate(`/movie/${imdbId}`, { replace: true }))}>
+                             <div className="movie" key={recco.id} onClick={() => fetchImdbId(recco.id, recco.media_type).then(imdbId => navigate(`/movie/${imdbId}`, { replace: true }))}>
                                <figure className="movie__img--wrapper">
                                  <img src={`https://image.tmdb.org/t/p/w500${recco.poster_path}`} alt="" className="movie__img" />
                                </figure>
                                <div className="movie__title">
-                                 <span className="movie__details"> {recco.title} </span>
+                                {/* Recco title is for movies, recco name is for TV shows */}
+                                 <span className="movie__details"> {recco.title || recco.name} </span>
                                  <div className="movie__subdetails"></div>
                                  <p className="movie__rating"><FontAwesomeIcon icon={faStar}/>{recco.vote_average.toFixed(1)}</p>
                                </div>
                                <div className="movie__year">
-                                 <span className="">{recco.release_date?.slice(0, 4)}</span>
+                                 <span className="">{recco.release_date || recco.first_air_date.slice(0, 4)}</span>
                                </div>
                              </div>
                         ))}
