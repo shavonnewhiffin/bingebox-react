@@ -65,3 +65,53 @@ export async function fetchTrending(){
     const filteredTrending = data.results.filter(item => item.media_type !== 'person')
     return filteredTrending;
 }
+
+
+// TRENDING PAGE
+
+//  Now playing movies fetch
+export async function fetchNowPlaying() {
+const { data } = await axios.get('https://api.themoviedb.org/3/movie/now_playing?api_key=7a01efd1f352217d83f9b1c924dc0af6');
+const nowPlaying = data.results;
+return nowPlaying;
+}
+
+// Upcoming movies
+
+export async function fetchUpcoming(){
+    const { data } = await axios.get('https://api.themoviedb.org/3/movie/upcoming?api_key=7a01efd1f352217d83f9b1c924dc0af6')
+    const upcomingMovies = data.results;
+    return upcomingMovies;
+}
+
+// Popular TV Series Lists
+export async function fetchPopularTv() {
+    const { data } = await axios.get('https://api.themoviedb.org/3/tv/popular?api_key=7a01efd1f352217d83f9b1c924dc0af6')  ;
+    const popularTv = data.results;
+    return popularTv;
+}
+
+// Popular Movies
+
+
+// Popular People List
+export async function fetchPopularPeople() {
+    const { data } = await axios.get('https://api.themoviedb.org/3/person/popular?api_key=7a01efd1f352217d83f9b1c924dc0af6')
+    const popularPeople = data.results;
+    return popularPeople;
+}
+
+// Top Rated TV
+export async function fetchTopTv() {
+    const { data } = await axios.get ('https://api.themoviedb.org/3/tv/top_rated?api_key=7a01efd1f352217d83f9b1c924dc0af6');
+    const topRatedTv = data.results;
+    return topRatedTv;
+}
+
+// Top Rated Movies
+export async function fetchTopMovies(){
+    const { data } = await axios.get('https://api.themoviedb.org/3/movie/top_rated?api_key=7a01efd1f352217d83f9b1c924dc0af6')
+    const topRatedMovies = data.results;
+    return topRatedMovies;
+}
+

@@ -14,9 +14,9 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/browse" element={<Browse />} />
-          <Route path="/#" element={<Trending />} />
+          <Route path="/trending" element={<Trending />} />
         </Route>
-          <Route path="movie/:id" element={<Movie />} />
+          <Route path="/movie/:id" element={<Movie />} />
       </Routes>
     </Router>
   );

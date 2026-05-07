@@ -105,7 +105,7 @@ const Browse = () => {
           </div>
         </div>
         <div className="content__wrapper">
-          <div className="movies movies__loading" id="movie__img--wrapper">
+          <div className={`movies ${loading ? 'movies__loading' : ''}`} id="movie__img--wrapper">
             {loading ? (
               <div className="movies__skeleton">
                 <div className="spinner__wrapper">
@@ -115,7 +115,11 @@ const Browse = () => {
                   />
                 </div>
                 {new Array(10).fill(0).map((_, index) => (
-                  <div className="movie__skeleton" key={index}></div>
+                  <div className="movie__skeleton" key={index}>
+                    <div className="movie__skeleton--img"></div>
+                    <div className="movie__skeleton--title"></div>
+                    <div className="movie__skeleton--year"></div>
+                  </div>
                 ))}
               </div>
             ) : (

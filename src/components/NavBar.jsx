@@ -29,7 +29,7 @@ function openMenu() {
              <div className="nav__links">
                <Link to="/" className="nav__link link__hover-effect" onClick={clearSearch}><b> Home</b></Link>
                  <Link to="/browse" className="nav__link link__hover-effect"><b>Browse</b></Link>
-                 <Link to="#" className="nav__link link__hover-effect"><b>Trending</b></Link>
+                 <Link to="trending" className="nav__link link__hover-effect"><b>Trending</b></Link>
                  <Link to="/" className="nav__link link__hover-effect"><b>Contact</b></Link>
                  <button className="btn__menu" onClick={openMenu}><FontAwesomeIcon icon={faBars}/></button>
                  <div className="menu__backdrop">
@@ -38,13 +38,13 @@ function openMenu() {
                      <div className="menu__lists">
                      <ul>
                          <li className="menu__list"> 
-                            <Link><p className="menu__link" onClick={closeMenu}>Home</p></Link>
+                            <Link to="/"><p className="menu__link" onClick={closeMenu}>Home</p></Link>
                          </li>
                          <li className="menu__list"> 
-                             <Link><p className="menu__link" onClick={closeMenu}>Browse</p></Link>
+                             <Link to="/browse"><p className="menu__link" onClick={closeMenu}>Browse</p></Link>
                          </li>
                          <li className="menu__list"> 
-                             <Link><p className="menu__link no-click" onClick={closeMenu}>Trending</p></Link>
+                             <Link to="/trending"><p className="menu__link no-click" onClick={closeMenu}>Trending</p></Link>
                          </li>
                          <li className="menu__list menu__list--primary-link"> 
                              <Link><p className="menu__list--primary">Contact</p></Link>

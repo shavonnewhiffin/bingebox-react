@@ -25,7 +25,10 @@ const navigate = useNavigate();
         // Every time it notices the group has changed size (like when images finish loading),
         // it runs this function and tells CSS the new exact width.
         const observer = new ResizeObserver(() => {
-            document.documentElement.style.setProperty('--group-width', `${groupRef.current.offsetWidth}px`);
+            // Guard against the callback firing after the component unmounts
+            if (groupRef.current) {
+                document.documentElement.style.setProperty('--group-width', `${groupRef.current.offsetWidth}px`);
+            }
         });
 
         // Start watching the first group
@@ -38,7 +41,7 @@ const navigate = useNavigate();
 
   return (
     <section id="trending">
-            <h2>Don't Miss What's Trending <FontAwesomeIcon icon={faFire}/></h2>
+            <h2 className="">Don't Miss What's Trending <FontAwesomeIcon icon={faFire}/></h2>
             <h3>#trendingthisweek</h3>
 <div className="carousel">
   <div className="carousel__track">
