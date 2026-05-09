@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faPlus, faShare, faStar } from '@fortawesome/free-solid-svg-icons'
 import { fetchMovieById, fetchRecommendations, fetchImdbId } from '../utils/api'
 
-const Movie = () => {
+const Movie = ({ addToList }) => {
 const { id } = useParams();
 const navigate = useNavigate();
 
@@ -28,6 +28,7 @@ useEffect(() => {
   return (
     <div className={`modal__container ${isVisible ? "modal__container--active" : ""}`}>
         <div className="modal">
+        <div className="modal__scroll">
         {/* Movie Left */}
             <div className="modal__left">
             <figure className="modal__img--wrapper">
@@ -48,7 +49,7 @@ useEffect(() => {
         </div>
         <hr className="modal__divider"/>
         <div className="modal__actions">
-        <button className="modal__actions--button">
+        <button className="modal__actions--button" onClick={() => addToList(movie)}>
         <FontAwesomeIcon icon={faPlus} />
         Add to Bingelist
         </button>
@@ -62,7 +63,7 @@ useEffect(() => {
             <div className="modal__container--recommended">
                 <div className="movie__selected-top">
                     <h2 className="movie__selected--title--top">
-                      Recommended For You
+                      More Recommendations for You
                     </h2>
                     <div className="movies">
                         {/* If a recommended movie is clicked, pass it's id and media type to the fetchImdbId function */}
@@ -78,13 +79,14 @@ useEffect(() => {
                                  <p className="movie__rating"><FontAwesomeIcon icon={faStar}/>{recco.vote_average.toFixed(1)}</p>
                                </div>
                                <div className="movie__year">
-                                 <span className="">{recco.release_date || recco.first_air_date.slice(0, 4)}</span>
+                                 <span className="">{recco.release_date?.slice(0, 4) || recco.first_air_date?.slice(0, 4)}</span>
                                </div>
                              </div>
                         ))}
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         </div>
     </div>

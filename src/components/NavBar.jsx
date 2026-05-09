@@ -30,7 +30,7 @@ function openMenu() {
                <Link to="/" className="nav__link link__hover-effect" onClick={clearSearch}><b> Home</b></Link>
                  <Link to="/browse" className="nav__link link__hover-effect"><b>Browse</b></Link>
                  <Link to="trending" className="nav__link link__hover-effect"><b>Trending</b></Link>
-                 <Link to="/" className="nav__link link__hover-effect"><b>Contact</b></Link>
+                 <Link to="/bingelist" className="nav__link link__hover-effect"><b>Bingelist</b></Link>
                  <button className="btn__menu" onClick={openMenu}><FontAwesomeIcon icon={faBars}/></button>
                  <div className="menu__backdrop">
                      <button className="btn__menu btn__menu--close" onClick={closeMenu}><FontAwesomeIcon icon={faXmark}/>
@@ -47,7 +47,7 @@ function openMenu() {
                              <Link to="/trending"><p className="menu__link no-click" onClick={closeMenu}>Trending</p></Link>
                          </li>
                          <li className="menu__list menu__list--primary-link"> 
-                             <Link><p className="menu__list--primary">Contact</p></Link>
+                             <Link to="/bingelist"><p className="menu__list--primary">Bingelist</p></Link>
                          </li>
                      </ul>
                  </div>

@@ -224,7 +224,11 @@ const Trending = () => {
         <div className="movies--small">
         {topMovies.slice(0,3).map((movie) => <div className="movie--small">
         <figure className="movie__img--wrapper">
-                    <img src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : stackedLogo} alt="" className="movie__img" />
+                    <img src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : stackedLogo}  onClick={() =>
+                  fetchImdbId(movie.id, movie.media_type).then((imdbId) =>
+                    navigate(`/movie/${imdbId}`)
+                  )
+                } alt="" className="movie__img" />
                   </figure>
                   <div className="movie__title">
                     <span className="movie__details">{movie.title}</span>
