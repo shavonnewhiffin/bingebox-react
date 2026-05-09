@@ -80,8 +80,7 @@ return nowPlaying;
 
 export async function fetchUpcoming(){
     const { data } = await axios.get('https://api.themoviedb.org/3/movie/upcoming?api_key=7a01efd1f352217d83f9b1c924dc0af6')
-    const upcomingMovies = data.results;
-    return upcomingMovies;
+    return data.results;
 }
 
 // Popular TV Series Lists
@@ -92,7 +91,10 @@ export async function fetchPopularTv() {
 }
 
 // Popular Movies
-
+export async function fetchPopularMovies() {
+    const { data } = await axios.get('https://api.themoviedb.org/3/movie/popular?api_key=7a01efd1f352217d83f9b1c924dc0af6')
+    return data.results;
+}
 
 // Popular People List
 export async function fetchPopularPeople() {
@@ -113,5 +115,11 @@ export async function fetchTopMovies(){
     const { data } = await axios.get('https://api.themoviedb.org/3/movie/top_rated?api_key=7a01efd1f352217d83f9b1c924dc0af6')
     const topRatedMovies = data.results;
     return topRatedMovies;
+}
+
+// Liz's Picks Love Island
+export async function fetchLoveIsland(){
+    const { data } = await axios.get('https://api.themoviedb.org/3/search/tv?api_key=7a01efd1f352217d83f9b1c924dc0af6&query=Love%20Island')
+    return data.results;
 }
 

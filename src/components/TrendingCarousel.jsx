@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import stackedLogo from '../assets/bingeboxstackedlogo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFire } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom';
 
 const TrendingCarousel = () => {
 const { id } = useParams();
@@ -41,7 +42,7 @@ const navigate = useNavigate();
 
   return (
     <section id="trending">
-            <h2 className="">Don't Miss What's Trending <FontAwesomeIcon icon={faFire}/></h2>
+            <Link to ="/trending"><div className="section__tag">Don't Miss What's Trending <FontAwesomeIcon icon={faFire}/></div></Link>
             <h3>#trendingthisweek</h3>
 <div className="carousel">
   <div className="carousel__track">

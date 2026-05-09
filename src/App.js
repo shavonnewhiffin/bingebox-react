@@ -5,6 +5,8 @@ import Layout from "./components/Layout";
 import Movie from "./components/Movie";
 import Trending from "./components/Trending";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { SwiperSlide } from "swiper/react";
+import BingeList from "./components/BingeList";
 
 function App() {
 
@@ -15,6 +17,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/trending" element={<Trending />} />
+          <Route path="/bingelist" element={<BingeList />} />
         </Route>
           <Route path="/movie/:id" element={<Movie />} />
       </Routes>
