@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { fetchTrending, fetchImdbId } from '../utils/api'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import stackedLogo from '../assets/bingeboxstackedlogo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFire } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
 
 const TrendingCarousel = () => {
-const { id } = useParams();
 const navigate = useNavigate();
 
     const [filteredTrending, setFilteredTrending] = useState([]);

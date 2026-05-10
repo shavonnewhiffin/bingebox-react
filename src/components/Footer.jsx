@@ -6,11 +6,11 @@ const Footer = () => {
   return (
     <footer>
       <div className="footer__content">
-        <a href="#">
+        <Link to="/">
           <figure className="footer__logo--wrapper">
             <img src={stackedLogo} className="footer__logo" alt="" />
           </figure>
-        </a>
+        </Link>
         <div className="footer__links">
           <Link to="/" className="footer__link link__hover-effect">
             Home

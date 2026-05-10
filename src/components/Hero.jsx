@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { fetchMovies } from "../utils/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import heroImg from "../assets/6.png";
 import streamingImg from "../assets/streamingplatforms.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -79,7 +79,7 @@ const Hero = () => {
   return (
     <>
       <section id="landing">
-        <img src={heroImg} alt="Hero image" className="hero-image" />
+        <img src={heroImg} alt="Hero" className="hero-image" />
         <div className="landing__container fadeUp" ref={containerRef}>
           <h1>Never wonder what to watch again.</h1>
           <div className="landing__container--bottom">
@@ -164,9 +164,9 @@ const Hero = () => {
           <div className="streaming__wrapper">
             <h3>
               Browse our{" "}
-              <a href="" className="link__hover-effect--white">
+              <Link to="/browse" className="link__hover-effect--white">
                 top recommendations
-              </a>{" "}
+              </Link>{" "}
               across streaming platforms
             </h3>
           </div>
