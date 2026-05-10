@@ -11,6 +11,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Jay from "../assets/Jay.png"
 import Liz from '../assets/Liz.png'
+import Social from "./Social";
+
+const carouselBreakpoints = {
+  0:    { slidesPerView: 1, spaceBetween: 8 },
+  470:  { slidesPerView: 2, spaceBetween: 12 },
+  640:  { slidesPerView: 3, spaceBetween: 12 },
+  772:  { slidesPerView: 4, spaceBetween: 16 },
+  992:  { slidesPerView: 5, spaceBetween: 16 },
+  1440: { slidesPerView: 6, spaceBetween: 16 },
+};
 
 const Trending = () => {
   const navigate = useNavigate();
@@ -23,6 +33,10 @@ const Trending = () => {
   const [loveIsland, setLoveIsland] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     fetchTrending().then((data) => {
@@ -67,23 +81,14 @@ const Trending = () => {
           backgroundImage: `url(https://image.tmdb.org/t/p/original${allTrending[0]?.backdrop_path})`,
         }}
       >
-        <div className="trends__content active">
+        <div className="trends__content">
           <img src="" alt="" />
           <h4>
-            <span>2023</span> <span>12+</span> <span>2hr</span>{" "}
-            <span>Romance</span>
+            {allTrending[0]?.title || allTrending[0]?.name}
           </h4>
           <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe est
-            nulla cupiditate rerum temporibus quaerat ratione odit, repudiandae
-            ea ad.
+            {allTrending[0]?.overview}
           </p>
-          <div className="trends__button">
-            <span>Watch Now</span>
-          </div>
-          <div className="trends__button">
-            <span>My List</span>
-          </div>
         </div>
       </div>
 {/* Top 10 Rankings */}
@@ -116,8 +121,7 @@ const Trending = () => {
         navigation
         pagination={{ clickable: true }}
         loop={true}
-        slidesPerView={6}
-        spaceBetween={16}
+        breakpoints={carouselBreakpoints}
       >
           {allTrending.map((movie) => (
               <SwiperSlide
@@ -167,8 +171,7 @@ const Trending = () => {
         navigation
         pagination={{ clickable: true }}
         loop={true}
-        slidesPerView={6}
-        spaceBetween={16}
+        breakpoints={carouselBreakpoints}
       >
           {nowPlaying.map((movie) => (
               <SwiperSlide
@@ -213,7 +216,7 @@ const Trending = () => {
         <div className="trends__container--left-side">
           <div>
             <div className="trends__section--title">Jay's Picks</div>
-            <div className="trends__section-staff--tag">They're called "classics" for a reason</div>
+            <div className="trends__section-staff--tag">They're called "classics" for a reason.</div>
           </div>
           <div className="staff__profile">
             <img src={Jay} alt="" className="staff__img" />
@@ -231,9 +234,8 @@ const Trending = () => {
                 } alt="" className="movie__img" />
                   </figure>
                   <div className="movie__title">
-                    <span className="movie__details">{movie.title}</span>
+                    <span className="movie__details--staff">{movie.title}</span>
                   </div>
-        <button><FontAwesomeIcon icon={faPlus}/></button>
         </div>)}
         </div>
     </div>
@@ -243,7 +245,7 @@ const Trending = () => {
           <div>
             <div className="trends__section--title">Liz's Picks</div>
             <div className="trends__section-staff--tag">
-              One man's trash tv is another man's treasure
+              One man's trash tv is another man's treasure.
             </div>
           </div>
           <div className="staff__profile">
@@ -258,9 +260,8 @@ const Trending = () => {
                     <img src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : stackedLogo} alt="" className="movie__img" />
                   </figure>
                   <div className="movie__title">
-                    <span className="movie__details">{movie.title || movie.name}</span>
+                    <span className="movie__details--staff">{movie.title || movie.name}</span>
                   </div>
-        <button><FontAwesomeIcon icon={faPlus}/></button>
         </div>)}
         </div>
     </div>
@@ -277,8 +278,7 @@ const Trending = () => {
         navigation
         pagination={{ clickable: true }}
         loop={true}
-        slidesPerView={6}
-        spaceBetween={16}
+        breakpoints={carouselBreakpoints}
       >
           {topTv.map((movie) => (
               <SwiperSlide
@@ -317,45 +317,6 @@ const Trending = () => {
       </Swiper>
       )}
 
-{/* <div className="trends__container">
-<div className="trends__row">
-<div className="trends__section--title">Top TV</div>
-        <div className="trends__section-tag">
-            Top 10 Trending Movies & Tv
-        </div>
-        <div className="content__wrapper">
-          <div className={`movies ${loading ? 'movies__loading' : ''}`} id="movie__img--wrapper">
-            {loading ? (
-              <div className="movies__skeleton">
-                {new Array(10).fill(0).map((_, index) => (
-                  <div className="movie__skeleton" key={index}>
-                    <div className="movie__skeleton--img"></div>
-                    <div className="movie__skeleton--title"></div>
-                    <div className="movie__skeleton--year"></div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              topTv.slice(0,6).map((movie) => (
-                <div className="movie" key={movie.id} onClick={() => fetchImdbId(movie.id, 'movie').then(imdbId => navigate(`/movie/${imdbId}`))}>
-                  <figure className="movie__img--wrapper">
-                    <img src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : stackedLogo} alt="" className="movie__img" />
-                  </figure>
-                  <div className="movie__title">
-                    <span className="movie__details">{movie.title}</span>
-                  </div>
-                  <div className="movie__year">
-                    <span>{movie.release_date?.slice(0, 4)}</span>
-                  </div>
-                </div>
-              ))
-            )}
-</div>
-</div>
-</div>
-</div> */}
-
-
       {/* // Top Movies Carousel */}
       <div className="trends__section-carousel--tag">
             Top Rated Movies
@@ -367,8 +328,7 @@ const Trending = () => {
         navigation
         pagination={{ clickable: true }}
         loop={true}
-        slidesPerView={6}
-        spaceBetween={16}
+        breakpoints={carouselBreakpoints}
       >
           {topMovies.map((movie) => (
               <SwiperSlide
@@ -406,6 +366,9 @@ const Trending = () => {
             ))}
       </Swiper>
       )}
+
+      <Social />
+
       {/* // Popular TV Carousel cards */}
       <div className="trends__section-carousel--tag">
             Popular Tv Series
@@ -417,8 +380,7 @@ const Trending = () => {
         navigation
         pagination={{ clickable: true }}
         loop={true}
-        slidesPerView={6}
-        spaceBetween={16}
+        breakpoints={carouselBreakpoints}
       >
           {popularTv.map((movie) => (
               <SwiperSlide
@@ -467,8 +429,7 @@ const Trending = () => {
         navigation
         pagination={{ clickable: true }}
         loop={true}
-        slidesPerView={6}
-        spaceBetween={16}
+        breakpoints={carouselBreakpoints}
       >
           {popularMovies.map((movie) => (
               <SwiperSlide

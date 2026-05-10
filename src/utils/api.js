@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const OMDB_KEY = "d051fbc2";
 
 // Function to fetchMovies in search inputs with OMDB/IMDB id

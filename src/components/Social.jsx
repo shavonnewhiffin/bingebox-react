@@ -4,13 +4,12 @@ import { Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import video1 from '../assets/video1.mp4'
-import video2 from '../assets/video2.mp4'
-import video3 from '../assets/video3.mp4'
-import video4 from '../assets/video4.mp4'
-import video5 from '../assets/video5.mp4'
-import video6 from '../assets/video6.mp4'
-import video7 from '../assets/video7.mp4'
+import videoa from '../assets/videoa.mp4'
+import videob from '../assets/videob.mp4'
+import videoc from '../assets/videoc.mp4'
+import videod from '../assets/videod.mp4'
+import videoe from '../assets/videoe.mp4'
+import videog from '../assets/videog.mp4'
 import { fetchTrending } from '../utils/api';
 
 
@@ -51,40 +50,35 @@ export default function Social() {
 
   const slidesData = [
     {
-      video: video1,
+      video: videoa,
       title: "@treyoftheday" ,
       description: `Trey shares his thought on ${trending[0]?.title || trending[0]?.name || '...'}`,
     },
     {
-      video: video2,
+      video: videob,
       title: "@jessology",
       description: `Okay, wait can we talk about the ending of Love Is Blind for a second?!`,
     },
     {
-      video: video3,
-      title: "@lisas_lemonade",
+      video: videoc,
+      title: "@lisas_lemon",
       description: `I paused my K drama addiction to watch ${trending[1]?.title || trending[1]?.name || '...' } and here are my thoughts.`,
     },
     {
-      video: video4,
+      video: videod,
       title: "@hottakejamal" ,
       description: `Had to take a moment to discuss ${trending[3]?.title || trending[3]?.name || '...' } on the pod.`,
     },
     {
-      video: video5,
+      video: videoe,
       title: "@mariavasquez33",
       description: "Here are my top 3 recommendations on Bingebox. Link in bio. ",
     },
     {
-      video: video6,
+      video: videog,
       title: "@ryanjames",
       description: `We all know that ${trending[4]?.title || trending[4]?.name || '...' } was underwhelming.`,
-    },
-    {
-      video: video7,
-      title: "@itsbrittbby",
-      description: `When they cancel and you get to Bingebox and chill instead.`,
-    },
+    }
   
   ]
   
@@ -92,12 +86,14 @@ export default function Social() {
 
   return (
     <section id="social">
-      <h2>Loved it? Hated it? Tag us with your reactions using #BINGEDIT</h2>
+      <div className="section__tag">Join the conversation</div>
+      <h2>Drop your hottest takes using</h2>
+      <span className="social__bingedit">#BINGEIT</span>
       <div className="social__container">
     <Swiper
     modules = {[Pagination, Navigation]}
       grabCursor
-      initialSlide={3}
+      initialSlide={1}
       centeredSlides
       slidesPerView="auto"
       speed={800}
@@ -105,9 +101,11 @@ export default function Social() {
       pagination={{ clickable:true }}
       navigation
       breakpoints={{
-        320: { spaceBetween: 40} ,
-        650: { spaceBetween: 30 },
-        1000: { spaceBetween: 20 },
+        470: { spaceBetween: 40 },
+        640: { spaceBetween: 30 },
+        772: { spaceBetween: 30 },
+        992: { spaceBetween: 30 },
+        1440: { spaceBetween: 30 },
       }}
       // Ref for margin adjustment
       onSwiper={(swiper) => {
@@ -121,7 +119,7 @@ export default function Social() {
     </div>
     <div className="social__info">
       <h4>{slide.title}</h4>
-      <p className="social__description">{slide.description} <span className="social__tag">#bingedit</span></p>
+      <p className="social__description">{slide.description} <span className="social__tag">#bingeit</span></p>
     </div>
   </SwiperSlide>
       ))}

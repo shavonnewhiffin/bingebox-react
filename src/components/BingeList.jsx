@@ -1,7 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 export default function BingeList({ list, removeItem }) {
   return (
@@ -21,7 +19,7 @@ export default function BingeList({ list, removeItem }) {
                   <div className="list__left">
                     <img src={movie.Poster || `https://image.tmdb.org/t/p/w500${movie.poster_path}`} className="list__movie--img" alt={movie.Title || movie.title || movie.name} />
                     <button className="list__movie--remove" onClick={() => removeItem(movie)}>
-                      <FontAwesomeIcon icon={faXmark}/>
+                     Remove
                     </button>
                   </div>
                   <div className="list__middle">
