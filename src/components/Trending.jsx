@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fetchTrending, fetchPopularTv, fetchPopularMovies, fetchNowPlaying, fetchLoveIsland, fetchTopMovies, fetchImdbId, fetchTopTv } from "../utils/api";
 import stackedLogo from "../assets/bingeboxstackedlogo.png";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,8 +7,6 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Jay from "../assets/Jay.png"
 import Liz from '../assets/Liz.png'
 import Social from "./Social";

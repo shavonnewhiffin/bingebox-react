@@ -5,7 +5,6 @@ import Layout from "./components/Layout";
 import Movie from "./components/Movie";
 import Trending from "./components/Trending";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { SwiperSlide } from "swiper/react";
 import BingeList from "./components/BingeList";
 
 function App() {
