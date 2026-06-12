@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570 118" width="570" height="118">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@700&amp;family=DM+Sans:wght@500&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- WING BARS — Deep Space Navy #050D1A         -->
+  <!-- ═══════════════════════════════════════════ -->
+  <rect x="34"  y="14" width="140" height="14" rx="1.5" fill="#050D1A"/>
+  <rect x="24"  y="32" width="133" height="14" rx="1.5" fill="#050D1A"/>
+  <rect x="15"  y="50" width="123" height="14" rx="1.5" fill="#050D1A"/>
+  <rect x="8"   y="68" width="109" height="14" rx="1.5" fill="#050D1A"/>
+  <rect x="4"   y="86" width="93"  height="14" rx="1.5" fill="#050D1A"/>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCALPEL — Burnished Copper #C47B3F          -->
+  <!-- Axis: handle (18,107) → blade tip (176,6)  -->
+  <!-- Direction (158,−101) ‖ norm (0.843,−0.539) -->
+  <!-- Perp (0.539, 0.843) · 4.5 = (2.43, 3.79)  -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- Main knife body -->
+  <polygon
+    points="15.6,103.2 173.6,2.2 178.4,9.8 20.4,110.8"
+    fill="#C47B3F"/>
+
+  <!-- Blade flare at tip -->
+  <polygon
+    points="173.6,2.2 182,0.5 184,10.5 178.4,9.8"
+    fill="#C47B3F"/>
+
+  <!-- Blade tip shading (slightly darker) -->
+  <polygon
+    points="177,1.4 182,0.5 184,10.5 181,10.2"
+    fill="#A5662F"/>
+
+  <!-- Handle grip lines — perpendicular to axis -->
+  <!-- t=0.25: center (57.5, 81.8) -->
+  <line x1="55.1" y1="78.0" x2="59.9" y2="85.6"
+        stroke="#7A4B1C" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- t=0.35: center (73.3, 71.7) -->
+  <line x1="70.9" y1="67.9" x2="75.7" y2="75.5"
+        stroke="#7A4B1C" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- t=0.45: center (89.1, 61.5) -->
+  <line x1="86.7" y1="57.7" x2="91.5" y2="65.3"
+        stroke="#7A4B1C" stroke-width="2.2" stroke-linecap="round"/>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- WORDMARK                                   -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- PEGASYS — Instrument Sans 700 -->
+  <text
+    x="195" y="84"
+    font-family="'Instrument Sans', 'Arial Black', sans-serif"
+    font-weight="700"
+    font-size="68"
+    fill="#050D1A"
+    letter-spacing="-0.5">PEGASYS</text>
+
+  <!-- Surgery. Simplified.™ — DM Sans 500 -->
+  <text
+    x="199" y="109"
+    font-family="'DM Sans', 'Arial', sans-serif"
+    font-weight="500"
+    font-size="22"
+    fill="#8EA8B4">Surgery. Simplified.™</text>
+</svg>

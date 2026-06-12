@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pegasys — Palette 3: Meridian Duality</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;600&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #050D1A;
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+    }
+
+    /* --- Star field --- */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+    }
+    body > *:not(.stars) { position: relative; z-index: 1; }
+
+    /* --- Header --- */
+    .header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .header .eyebrow {
+      color: #00C8E0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      opacity: 0.9;
+    }
+    .header h2 {
+      font-family: 'Instrument Sans', sans-serif;
+      color: #F8FAFC;
+      font-size: 42px;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .header h2 .span-copper { color: #C47B3F; }
+    .header h2 .span-cyan   { color: #00C8E0; }
+    .header .concept {
+      color: #8EA8B4;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+      margin-bottom: 48px;
+    }
+
+    /* --- Palette strip --- */
+    .palette {
+      display: flex;
+      gap: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.7),
+                  0 0 0 1px rgba(0,200,224,0.12),
+                  0 0 40px rgba(196,123,63,0.06);
+      width: 100%;
+      max-width: 900px;
+      height: 360px;
+    }
+    .swatch {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 22px 14px;
+      transition: flex 0.35s cubic-bezier(0.4,0,0.2,1);
+      cursor: default;
+    }
+    .swatch:hover { flex: 1.5 1 0; }
+    .swatch-label {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      font-weight: 600;
+      opacity: 0.65;
+    }
+    .swatch-name {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      line-height: 1.15;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .swatch-hex {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      opacity: 0.55;
+    }
+
+    .s-navy {
+      background: #050D1A;
+      border: 1px solid rgba(0,200,224,0.18);
+    }
+    .s-navy .swatch-label,
+    .s-navy .swatch-name,
+    .s-navy .swatch-hex { color: #F8FAFC; }
+
+    .s-midnight { background: #0B1A2E; }
+    .s-midnight .swatch-label,
+    .s-midnight .swatch-name,
+    .s-midnight .swatch-hex { color: #F8FAFC; }
+
+    .s-copper {
+      background: #C47B3F;
+      position: relative;
+      overflow: hidden;
+    }
+    .s-copper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .s-copper::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(0,0,0,0.25), transparent);
+      pointer-events: none;
+    }
+    .s-copper .swatch-label,
+    .s-copper .swatch-name,
+    .s-copper .swatch-hex { color: #050D1A; position: relative; z-index: 1; }
+
+    .s-cyan {
+      background: #00C8E0;
+      position: relative;
+      overflow: hidden;
+    }
+    .s-cyan::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .s-cyan::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(0,40,50,0.28), transparent);
+      pointer-events: none;
+    }
+    .s-cyan .swatch-label,
+    .s-cyan .swatch-name,
+    .s-cyan .swatch-hex { color: #050D1A; position: relative; z-index: 1; }
+
+    .s-white { background: #F8FAFC; }
+    .s-white .swatch-label,
+    .s-white .swatch-name,
+    .s-white .swatch-hex { color: #050D1A; }
+
+    .s-steel { background: #8EA8B4; }
+    .s-steel .swatch-label,
+    .s-steel .swatch-name,
+    .s-steel .swatch-hex { color: #050D1A; }
+
+    /* --- Detail cards --- */
+    .details {
+      margin-top: 40px;
+      display: flex;
+      gap: 14px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .detail-card {
+      flex: 1;
+      background: rgba(248,250,252,0.03);
+      border: 1px solid rgba(0,200,224,0.1);
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .detail-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+    }
+    .detail-role {
+      color: #00C8E0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .detail-name {
+      font-family: 'Instrument Sans', sans-serif;
+      color: #F8FAFC;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .detail-hex {
+      color: #8EA8B4;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    /* --- Constellation wrapper (canvas background) --- */
+    .constellation-wrap {
+      margin-top: 48px;
+      width: 100%;
+      max-width: 900px;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    #constellation-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+    }
+
+    /* --- Typography preview --- */
+    .type-section {
+      width: 100%;
+      border: 1px solid rgba(0,200,224,0.12);
+      border-radius: 20px;
+      padding: 40px 44px;
+      background: rgba(5,13,26,0.75);
+      position: relative;
+      z-index: 1;
+    }
+    .type-label {
+      color: #00C8E0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      opacity: 0.8;
+    }
+    .type-row {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .type-block { flex: 1; }
+    .type-role {
+      color: #8EA8B4;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      opacity: 0.6;
+    }
+    .type-sample-serif {
+      font-family: 'Instrument Sans', sans-serif;
+      color: #F8FAFC;
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+    .type-sample-serif .copper { color: #C47B3F; }
+    .type-sample-serif .cyan   { color: #00C8E0; }
+    .type-sample-sans {
+      font-family: 'DM Sans', sans-serif;
+      color: #8EA8B4;
+      font-size: 14px;
+      line-height: 1.65;
+      max-width: 280px;
+    }
+    .type-sample-mono {
+      font-family: 'JetBrains Mono', monospace;
+      color: #00C8E0;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .type-sample-mono .mono-copper { color: #C47B3F; }
+    .divider {
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(196,123,63,0.2), rgba(0,200,224,0.2));
+      align-self: stretch;
+    }
+
+    /* --- Actual constellation section --- */
+    .const-section {
+      margin-top: 32px;
+      width: 100%;
+      max-width: 900px;
+      background: #000;
+      border-radius: 20px;
+      padding: 44px 44px 36px;
+      border: 1px solid rgba(0,200,224,0.1);
+    }
+    .const-eyebrow {
+      color: #00C8E0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
+    .const-sub {
+      color: #8EA8B4;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      opacity: 0.45;
+      margin-bottom: 40px;
+      letter-spacing: 0.04em;
+    }
+    .const-diagrams {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+    }
+    .const-diagram {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .const-svg {
+      width: 100%;
+      max-width: 340px;
+      overflow: visible;
+    }
+    .const-divider-v {
+      width: 1px;
+      height: 400px;
+      background: linear-gradient(to bottom, rgba(196,123,63,0.18), rgba(0,200,224,0.18));
+      margin: 0 12px;
+      align-self: center;
+    }
+
+    /* === Surgical Team === */
+    .team-section {
+      margin-top: 48px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .section-eyebrow {
+      color: #00C8E0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      opacity: 0.8;
+    }
+    .section-sub {
+      color: #8EA8B4;
+      font-size: 12px;
+      opacity: 0.5;
+      margin-bottom: 28px;
+      letter-spacing: 0.04em;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
+    .team-card {
+      background: rgba(248,250,252,0.03);
+      border: 1px solid rgba(0,200,224,0.08);
+      border-radius: 12px;
+      padding: 20px 10px 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .team-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .tc-copper::before   { background: #C47B3F; }
+    .tc-cyan::before     { background: #00C8E0; }
+    .tc-steel::before    { background: #8EA8B4; }
+    .tc-white::before    { background: #F8FAFC; }
+    .tc-midnight::before { background: #0B1A2E; border-bottom: 1px solid rgba(142,168,180,0.18); }
+    .tc-navy::before     { background: #050D1A; border-bottom: 1px solid rgba(142,168,180,0.12); }
+
+    .tc-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; font-weight: 600;
+    }
+    .tc-copper   .tc-avatar { background: rgba(196,123,63,0.15);  border: 1px solid rgba(196,123,63,0.38);  color: #C47B3F; }
+    .tc-cyan     .tc-avatar { background: rgba(0,200,224,0.12);   border: 1px solid rgba(0,200,224,0.35);   color: #00C8E0; }
+    .tc-steel    .tc-avatar { background: rgba(142,168,180,0.1);  border: 1px solid rgba(142,168,180,0.32); color: #8EA8B4; }
+    .tc-white    .tc-avatar { background: rgba(248,250,252,0.08); border: 1px solid rgba(248,250,252,0.22); color: #F8FAFC; }
+    .tc-midnight .tc-avatar { background: rgba(11,26,46,0.8);     border: 1px solid rgba(142,168,180,0.2);  color: #8EA8B4; }
+    .tc-navy     .tc-avatar { background: rgba(5,13,26,0.9);      border: 1px solid rgba(142,168,180,0.14); color: #8EA8B4; }
+
+    .tc-role {
+      font-family: 'Instrument Sans', sans-serif;
+      color: #F8FAFC;
+      font-size: 11px; font-weight: 600;
+      margin-bottom: 3px; line-height: 1.25;
+    }
+    .tc-desc {
+      color: #8EA8B4;
+      font-size: 9px; opacity: 0.62;
+      margin-bottom: 9px; line-height: 1.4;
+    }
+    .tc-hex { font-family: 'JetBrains Mono', monospace; font-size: 8px; opacity: 0.75; letter-spacing: 0.02em; }
+    .tc-copper   .tc-hex { color: #C47B3F; }
+    .tc-cyan     .tc-hex { color: #00C8E0; }
+    .tc-steel    .tc-hex { color: #8EA8B4; }
+    .tc-white    .tc-hex { color: #F8FAFC; }
+    .tc-midnight .tc-hex { color: #8EA8B4; }
+    .tc-navy     .tc-hex { color: #8EA8B4; }
+
+    /* === Surgical Instruments === */
+    .instruments-section {
+      margin-top: 40px;
+      width: 100%; max-width: 900px;
+      background: linear-gradient(160deg, rgba(11,26,46,0.75) 0%, rgba(5,13,26,0.88) 100%);
+      border: 1px solid rgba(0,200,224,0.1);
+      border-radius: 20px;
+      padding: 36px 36px 28px;
+    }
+    .instruments-tray {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .instrument-card {
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center;
+      padding: 16px 8px 14px;
+      background: rgba(5,13,26,0.55);
+      border: 1px solid rgba(142,168,180,0.1);
+      border-radius: 10px;
+    }
+    .instrument-svg-wrap {
+      width: 36px; height: 110px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px;
+    }
+    .instrument-svg-wrap svg { width: 36px; height: 110px; }
+    .instrument-name {
+      font-family: 'Instrument Sans', sans-serif;
+      color: #F8FAFC;
+      font-size: 9.5px; font-weight: 600;
+      text-align: center; margin-bottom: 3px; line-height: 1.25;
+    }
+    .instrument-class {
+      color: #8EA8B4;
+      font-size: 8.5px;
+      text-align: center; opacity: 0.55;
+      margin-bottom: 8px; line-height: 1.35;
+    }
+    .instrument-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+    }
+
+    /* --- PRINT STYLES --- */
+    @media print {
+      @page { size: A4 portrait; margin: 14mm 16mm; }
+
+      body {
+        display: block;
+        padding: 32px 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .stars { display: none; }
+
+      .header { margin-bottom: 48px; }
+      .header .eyebrow { font-size: 12px; margin-bottom: 18px; }
+      .header h2 { font-size: 46px; margin-bottom: 10px; }
+      .header .concept { font-size: 14px; margin-bottom: 0; }
+
+      .palette {
+        height: 310px;
+        max-width: 100%;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .details {
+        margin-top: 48px;
+        max-width: 100%;
+        gap: 18px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .detail-card { padding: 28px 16px; }
+      .detail-dot  { width: 48px; height: 48px; margin-bottom: 16px; }
+      .detail-role { font-size: 10px; margin-bottom: 7px; }
+      .detail-name { font-size: 16px; margin-bottom: 7px; }
+      .detail-hex  { font-size: 12px; }
+
+      .constellation-wrap {
+        break-before: page;
+        page-break-before: always;
+        margin-top: 0;
+        max-width: 100%;
+      }
+
+      #constellation-canvas { display: none; }
+
+      .type-section {
+        max-width: 100%;
+        background: rgba(5,13,26,0.95) !important;
+      }
+
+      .const-section {
+        max-width: 100%;
+        margin-top: 24px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .const-svg { max-width: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+
+  <div class="header">
+    <div class="eyebrow">Pegasys Medical — Palette 03</div>
+    <h2>Meridian <span class="span-copper">Duality</span></h2>
+    <div class="concept">Deep Navy · Burnished Copper · Luminous Cyan · Sterile White · Surgical Steel</div>
+  </div>
+
+  <!-- Color palette strip -->
+  <div class="palette">
+    <div class="swatch s-navy">
+      <div class="swatch-label">Foundation</div>
+      <div class="swatch-name">Deep Space Navy</div>
+      <div class="swatch-hex">#050D1A</div>
+    </div>
+    <div class="swatch s-midnight">
+      <div class="swatch-label">Secondary Dark</div>
+      <div class="swatch-name">Carbon Midnight</div>
+      <div class="swatch-hex">#0B1A2E</div>
+    </div>
+    <div class="swatch s-copper">
+      <div class="swatch-label">Warm Accent</div>
+      <div class="swatch-name">Burnished Copper</div>
+      <div class="swatch-hex">#C47B3F</div>
+    </div>
+    <div class="swatch s-cyan">
+      <div class="swatch-label">Cool Accent</div>
+      <div class="swatch-name">Luminous Cyan</div>
+      <div class="swatch-hex">#00C8E0</div>
+    </div>
+    <div class="swatch s-white">
+      <div class="swatch-label">Clarity</div>
+      <div class="swatch-name">Sterile White</div>
+      <div class="swatch-hex">#F8FAFC</div>
+    </div>
+    <div class="swatch s-steel">
+      <div class="swatch-label">Metallic Neutral</div>
+      <div class="swatch-name">Surgical Steel</div>
+      <div class="swatch-hex">#8EA8B4</div>
+    </div>
+  </div>
+
+  <!-- Detail cards -->
+  <div class="details">
+    <div class="detail-card">
+      <div class="detail-dot" style="background:#050D1A; border:1px solid rgba(0,200,224,0.3)"></div>
+      <div class="detail-role">Base</div>
+      <div class="detail-name">Deep Space Navy</div>
+      <div class="detail-hex">#050D1A</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-dot" style="background:#0B1A2E; border:1px solid rgba(255,255,255,0.08)"></div>
+      <div class="detail-role">Secondary</div>
+      <div class="detail-name">Carbon Midnight</div>
+      <div class="detail-hex">#0B1A2E</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-dot" style="background:#C47B3F; box-shadow: 0 0 16px rgba(196,123,63,0.5)"></div>
+      <div class="detail-role">Warm Accent</div>
+      <div class="detail-name">Burnished Copper</div>
+      <div class="detail-hex">#C47B3F</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-dot" style="background:#00C8E0; box-shadow: 0 0 16px rgba(0,200,224,0.5)"></div>
+      <div class="detail-role">Cool Accent</div>
+      <div class="detail-name">Luminous Cyan</div>
+      <div class="detail-hex">#00C8E0</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-dot" style="background:#F8FAFC"></div>
+      <div class="detail-role">Clarity</div>
+      <div class="detail-name">Sterile White</div>
+      <div class="detail-hex">#F8FAFC</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-dot" style="background:#8EA8B4"></div>
+      <div class="detail-role">Neutral</div>
+      <div class="detail-name">Surgical Steel</div>
+      <div class="detail-hex">#8EA8B4</div>
+    </div>
+  </div>
+
+  <!-- Surgical Team -->
+  <div class="team-section">
+    <div class="section-eyebrow">Surgical Team — Role Mapping</div>
+    <div class="section-sub">Each palette tone anchors a distinct function within the OR</div>
+    <div class="team-grid">
+
+      <div class="team-card tc-copper">
+        <div class="tc-avatar">SR</div>
+        <div class="tc-role">Attending Surgeon</div>
+        <div class="tc-desc">Operative command &amp; precision craft</div>
+        <div class="tc-hex">#C47B3F · Burnished Copper</div>
+      </div>
+
+      <div class="team-card tc-cyan">
+        <div class="tc-avatar">ST</div>
+        <div class="tc-role">Scrub Technologist</div>
+        <div class="tc-desc">Instrument precision &amp; sterile field</div>
+        <div class="tc-hex">#00C8E0 · Luminous Cyan</div>
+      </div>
+
+      <div class="team-card tc-steel">
+        <div class="tc-avatar">FA</div>
+        <div class="tc-role">First Assistant</div>
+        <div class="tc-desc">Surgical support &amp; tissue exposure</div>
+        <div class="tc-hex">#8EA8B4 · Surgical Steel</div>
+      </div>
+
+      <div class="team-card tc-white">
+        <div class="tc-avatar">RN</div>
+        <div class="tc-role">Circulating Nurse</div>
+        <div class="tc-desc">Sterile conscience &amp; OR flow</div>
+        <div class="tc-hex">#F8FAFC · Sterile White</div>
+      </div>
+
+      <div class="team-card tc-midnight">
+        <div class="tc-avatar">AA</div>
+        <div class="tc-role">Anesthesiologist</div>
+        <div class="tc-desc">Physiologic depth &amp; stability</div>
+        <div class="tc-hex">#0B1A2E · Carbon Midnight</div>
+      </div>
+
+      <div class="team-card tc-navy">
+        <div class="tc-avatar">RS</div>
+        <div class="tc-role">Surgical Resident</div>
+        <div class="tc-desc">Foundation building &amp; learning</div>
+        <div class="tc-hex">#050D1A · Deep Space Navy</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Surgical Instruments -->
+  <div class="instruments-section">
+    <div class="section-eyebrow">Mayo Stand — Precision Instruments</div>
+    <div class="section-sub">Core instruments mapped to palette · arranged as on the sterile field</div>
+    <div class="instruments-tray">
+
+      <!-- Scalpel #10 — Copper -->
+      <div class="instrument-card">
+        <div class="instrument-svg-wrap">
+          <svg viewBox="0 0 36 110" xmlns="http://www.w3.org/2000/svg">
+            <rect x="13" y="6" width="10" height="54" rx="5" fill="#C47B3F" opacity="0.88"/>
+            <line x1="12" y1="21" x2="24" y2="21" stroke="#7a4a24" stroke-width="0.8" opacity="0.7"/>
+            <line x1="12" y1="28" x2="24" y2="28" stroke="#7a4a24" stroke-width="0.8" opacity="0.7"/>
+            <line x1="12" y1="35" x2="24" y2="35" stroke="#7a4a24" stroke-width="0.8" opacity="0.7"/>
+            <line x1="12" y1="42" x2="24" y2="42" stroke="#7a4a24" stroke-width="0.8" opacity="0.7"/>
+            <line x1="12" y1="49" x2="24" y2="49" stroke="#7a4a24" stroke-width="0.8" opacity="0.7"/>
+            <rect x="11" y="60" width="14" height="6" rx="1" fill="#8EA8B4" opacity="0.85"/>
+            <path d="M13,66 C11,77 12,92 18,104 C24,92 25,75 23,66 Z" fill="#F8FAFC" opacity="0.88"/>
+            <line x1="23" y1="66" x2="22" y2="96" stroke="#8EA8B4" stroke-width="0.5" opacity="0.35"/>
+          </svg>
+        </div>
+        <div class="instrument-name">Scalpel #10</div>
+        <div class="instrument-class">Incision &amp; dissection</div>
+        <div class="instrument-dot" style="background:#C47B3F;box-shadow:0 0 8px rgba(196,123,63,0.5)"></div>
+      </div>
+
+      <!-- Adson Tissue Forceps — Steel -->
+      <div class="instrument-card">
+        <div class="instrument-svg-wrap">
+          <svg viewBox="0 0 36 110" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16,6 Q18,2 20,6" fill="none" stroke="#8EA8B4" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+            <path d="M16,6 C15,30 13,60 14,100" fill="none" stroke="#8EA8B4" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+            <path d="M20,6 C21,30 23,60 22,100" fill="none" stroke="#8EA8B4" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+            <line x1="13" y1="96" x2="23" y2="96" stroke="#8EA8B4" stroke-width="0.7" opacity="0.45"/>
+            <line x1="13" y1="99" x2="23" y2="99" stroke="#8EA8B4" stroke-width="0.7" opacity="0.45"/>
+            <line x1="13" y1="102" x2="23" y2="102" stroke="#8EA8B4" stroke-width="0.7" opacity="0.45"/>
+          </svg>
+        </div>
+        <div class="instrument-name">Adson Forceps</div>
+        <div class="instrument-class">Tissue grasping &amp; handling</div>
+        <div class="instrument-dot" style="background:#8EA8B4"></div>
+      </div>
+
+      <!-- Mayo-Hegar Needle Holder — Cyan -->
+      <div class="instrument-card">
+        <div class="instrument-svg-wrap">
+          <svg viewBox="0 0 36 110" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="11" r="7" fill="none" stroke="#00C8E0" stroke-width="1.8" opacity="0.85"/>
+            <circle cx="24" cy="11" r="7" fill="none" stroke="#00C8E0" stroke-width="1.8" opacity="0.85"/>
+            <line x1="12" y1="18" x2="14" y2="52" stroke="#00C8E0" stroke-width="1.8" stroke-linecap="round" opacity="0.78"/>
+            <line x1="24" y1="18" x2="22" y2="52" stroke="#00C8E0" stroke-width="1.8" stroke-linecap="round" opacity="0.78"/>
+            <rect x="12" y="52" width="12" height="8" rx="1.5" fill="#00C8E0" opacity="0.5"/>
+            <line x1="14" y1="60" x2="14" y2="104" stroke="#00C8E0" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+            <line x1="22" y1="60" x2="22" y2="104" stroke="#00C8E0" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+            <line x1="13" y1="100" x2="23" y2="100" stroke="#00C8E0" stroke-width="0.6" opacity="0.4"/>
+            <line x1="13" y1="103" x2="23" y2="103" stroke="#00C8E0" stroke-width="0.6" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="instrument-name">Needle Holder</div>
+        <div class="instrument-class">Suture &amp; wound closure</div>
+        <div class="instrument-dot" style="background:#00C8E0;box-shadow:0 0 8px rgba(0,200,224,0.5)"></div>
+      </div>
+
+      <!-- Metzenbaum Scissors — Steel -->
+      <div class="instrument-card">
+        <div class="instrument-svg-wrap">
+          <svg viewBox="0 0 36 110" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="11" r="7" fill="none" stroke="#8EA8B4" stroke-width="1.8" opacity="0.82"/>
+            <circle cx="24" cy="11" r="7" fill="none" stroke="#8EA8B4" stroke-width="1.8" opacity="0.82"/>
+            <line x1="12" y1="18" x2="21" y2="104" stroke="#8EA8B4" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+            <line x1="24" y1="18" x2="15" y2="104" stroke="#8EA8B4" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+            <circle cx="18" cy="59" r="3" fill="#8EA8B4" opacity="0.88"/>
+          </svg>
+        </div>
+        <div class="instrument-name">Metzenbaum Scissors</div>
+        <div class="instrument-class">Delicate tissue cutting</div>
+        <div class="instrument-dot" style="background:#8EA8B4"></div>
+      </div>
+
+      <!-- Army-Navy Retractor — Copper -->
+      <div class="instrument-card">
+        <div class="instrument-svg-wrap">
+          <svg viewBox="0 0 36 110" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="8" width="6" height="63" rx="3" fill="#C47B3F" opacity="0.85"/>
+            <ellipse cx="18" cy="22" rx="10" ry="2.5" fill="none" stroke="#C47B3F" stroke-width="1.2" opacity="0.5"/>
+            <ellipse cx="18" cy="30" rx="10" ry="2.5" fill="none" stroke="#C47B3F" stroke-width="1.2" opacity="0.5"/>
+            <ellipse cx="18" cy="38" rx="10" ry="2.5" fill="none" stroke="#C47B3F" stroke-width="1.2" opacity="0.5"/>
+            <rect x="8" y="71" width="20" height="5" rx="2.5" fill="#C47B3F" opacity="0.85"/>
+            <path d="M9,76 Q9,90 18,94 Q27,90 27,76" fill="none" stroke="#C47B3F" stroke-width="2" opacity="0.7" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="instrument-name">Army-Navy Retractor</div>
+        <div class="instrument-class">Wound &amp; tissue retraction</div>
+        <div class="instrument-dot" style="background:#C47B3F;box-shadow:0 0 8px rgba(196,123,63,0.5)"></div>
+      </div>
+
+      <!-- Electrosurgical Pencil — Cyan -->
+      <div class="instrument-card">
+        <div class="instrument-svg-wrap">
+          <svg viewBox="0 0 36 110" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="6" width="12" height="72" rx="4" fill="rgba(0,200,224,0.1)"/>
+            <rect x="12" y="6" width="12" height="72" rx="4" fill="none" stroke="#00C8E0" stroke-width="1.5" opacity="0.85"/>
+            <rect x="14" y="24" width="8" height="5" rx="2.5" fill="#00C8E0" opacity="0.65"/>
+            <circle cx="18" cy="44" r="2.8" fill="#00C8E0" opacity="0.35"/>
+            <circle cx="18" cy="44" r="1.4" fill="#00C8E0" opacity="0.85"/>
+            <rect x="16" y="72" width="4" height="5" rx="1" fill="#00C8E0" opacity="0.5"/>
+            <line x1="18" y1="77" x2="18" y2="103" stroke="#00C8E0" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>
+            <path d="M18,103 L13,94" stroke="#00C8E0" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            <path d="M10,94 L14,90 L12,85 L16,81" fill="none" stroke="#00C8E0" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="instrument-name">Electrosurgical Pencil</div>
+        <div class="instrument-class">Cautery &amp; hemostasis</div>
+        <div class="instrument-dot" style="background:#00C8E0;box-shadow:0 0 8px rgba(0,200,224,0.5)"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Typography preview with constellation background -->
+  <div class="constellation-wrap">
+    <canvas id="constellation-canvas"></canvas>
+    <div class="type-section">
+      <div class="type-label">Typography System — Meridian Duality</div>
+      <div class="type-row">
+        <div class="type-block">
+          <div class="type-role">Headlines — Instrument Sans</div>
+          <div class="type-sample-serif">Where <span class="copper">Precision</span><br>meets <span class="cyan">Innovation.</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="type-block">
+          <div class="type-role">Body — DM Sans</div>
+          <div class="type-sample-sans">Pegasys unites the warmth of human craft with the clarity of precision technology — redefining surgical intelligence for the world's leading hospitals.</div>
+        </div>
+        <div class="divider"></div>
+        <div class="type-block">
+          <div class="type-role">Data — JetBrains Mono</div>
+          <div class="type-sample-mono">
+            ORION_SYS v4.2.1<br>
+            Instruments tracked: 1,847<br>
+            <span class="mono-copper">Waste reduction: 47%</span><br>
+            OR efficiency: +31%<br>
+            Status: OPTIMIZED ✓
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end constellation-wrap -->
+
+  <!-- Actual star constellation diagrams -->
+  <div class="const-section">
+    <div class="const-eyebrow">The Constellations</div>
+    <div class="const-sub">The celestial origins of Pegasys &amp; its Orion product</div>
+    <div class="const-diagrams">
+
+      <!-- ORION — Betelgeuse: Copper · Rigel: Cyan -->
+      <div class="const-diagram">
+        <svg class="const-svg" viewBox="0 0 280 410" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="g-ori-bet" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#C47B3F" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#C47B3F" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="g-ori-rig" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#00C8E0" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#00C8E0" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- Background scatter stars -->
+          <circle cx="14" cy="22" r="0.7" fill="#F8FAFC" opacity="0.3"/>
+          <circle cx="48" cy="58" r="0.5" fill="#F8FAFC" opacity="0.2"/>
+          <circle cx="82" cy="15" r="0.6" fill="#F8FAFC" opacity="0.25"/>
+          <circle cx="218" cy="32" r="0.5" fill="#F8FAFC" opacity="0.18"/>
+          <circle cx="258" cy="70" r="0.4" fill="#F8FAFC" opacity="0.15"/>
+          <circle cx="265" cy="165" r="0.6" fill="#F8FAFC" opacity="0.2"/>
+          <circle cx="22" cy="180" r="0.4" fill="#F8FAFC" opacity="0.15"/>
+          <circle cx="258" cy="290" r="0.5" fill="#F8FAFC" opacity="0.18"/>
+          <circle cx="18" cy="315" r="0.6" fill="#F8FAFC" opacity="0.2"/>
+          <circle cx="55" cy="385" r="0.5" fill="#F8FAFC" opacity="0.15"/>
+          <circle cx="238" cy="378" r="0.4" fill="#F8FAFC" opacity="0.18"/>
+          <circle cx="165" cy="12" r="0.5" fill="#F8FAFC" opacity="0.2"/>
+          <circle cx="10" cy="90" r="0.4" fill="#F8FAFC" opacity="0.15"/>
+          <circle cx="240" cy="125" r="0.6" fill="#F8FAFC" opacity="0.12"/>
+          <circle cx="118" cy="285" r="0.4" fill="#F8FAFC" opacity="0.12"/>
+          <circle cx="30" cy="250" r="0.5" fill="#F8FAFC" opacity="0.1"/>
+          <!-- Connection lines -->
+          <line x1="140" y1="42" x2="78" y2="122" stroke="#8EA8B4" stroke-width="0.7" opacity="0.5"/>
+          <line x1="140" y1="42" x2="198" y2="112" stroke="#8EA8B4" stroke-width="0.7" opacity="0.5"/>
+          <line x1="78" y1="122" x2="108" y2="212" stroke="#8EA8B4" stroke-width="0.7" opacity="0.5"/>
+          <line x1="198" y1="112" x2="142" y2="222" stroke="#8EA8B4" stroke-width="0.7" opacity="0.5"/>
+          <line x1="108" y1="212" x2="142" y2="222" stroke="#8EA8B4" stroke-width="0.7" opacity="0.55"/>
+          <line x1="142" y1="222" x2="178" y2="230" stroke="#8EA8B4" stroke-width="0.7" opacity="0.55"/>
+          <line x1="108" y1="212" x2="96" y2="342" stroke="#8EA8B4" stroke-width="0.6" opacity="0.38"/>
+          <line x1="178" y1="230" x2="200" y2="332" stroke="#8EA8B4" stroke-width="0.6" opacity="0.38"/>
+          <line x1="96" y1="342" x2="200" y2="332" stroke="#8EA8B4" stroke-width="0.6" opacity="0.32"/>
+          <!-- Betelgeuse — Copper glow -->
+          <circle cx="78" cy="122" r="22" fill="url(#g-ori-bet)"/>
+          <circle cx="78" cy="122" r="5.5" fill="#C47B3F" opacity="0.95"/>
+          <!-- Rigel — Cyan glow -->
+          <circle cx="200" cy="332" r="18" fill="url(#g-ori-rig)"/>
+          <circle cx="200" cy="332" r="4.8" fill="#00C8E0" opacity="0.92"/>
+          <!-- Other stars -->
+          <circle cx="140" cy="42" r="3" fill="#8EA8B4" opacity="0.8"/>
+          <circle cx="198" cy="112" r="3.8" fill="#8EA8B4" opacity="0.78"/>
+          <circle cx="108" cy="212" r="3" fill="#8EA8B4" opacity="0.78"/>
+          <circle cx="142" cy="222" r="3.2" fill="#8EA8B4" opacity="0.78"/>
+          <circle cx="178" cy="230" r="3" fill="#8EA8B4" opacity="0.78"/>
+          <circle cx="96" cy="342" r="3.2" fill="#8EA8B4" opacity="0.72"/>
+          <!-- Labels -->
+          <text x="148" y="39" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.55">Meissa</text>
+          <text x="16" y="119" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#C47B3F" opacity="0.85">Betelgeuse</text>
+          <text x="204" y="109" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.6">Bellatrix</text>
+          <text x="58" y="209" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.52">Mintaka</text>
+          <text x="148" y="214" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.52">Alnilam</text>
+          <text x="184" y="224" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.52">Alnitak</text>
+          <text x="44" y="352" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.6">Saiph</text>
+          <text x="206" y="342" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#00C8E0" opacity="0.85">Rigel</text>
+          <text x="140" y="400" font-family="Instrument Sans, sans-serif" font-size="12" fill="#F8FAFC" opacity="0.85" text-anchor="middle" font-weight="300" letter-spacing="5">ORION</text>
+        </svg>
+      </div>
+
+      <div class="const-divider-v"></div>
+
+      <!-- LIBRA — β Lib: Cyan · α Lib: Copper -->
+      <div class="const-diagram">
+        <svg class="const-svg" viewBox="0 0 280 410" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="g-lib-beta" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#00C8E0" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#00C8E0" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="g-lib-alpha" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#C47B3F" stop-opacity="0.42"/>
+              <stop offset="100%" stop-color="#C47B3F" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- Background scatter stars -->
+          <circle cx="22" cy="18" r="0.6" fill="#F8FAFC" opacity="0.2"/>
+          <circle cx="62" cy="40" r="0.4" fill="#F8FAFC" opacity="0.18"/>
+          <circle cx="235" cy="22" r="0.5" fill="#F8FAFC" opacity="0.2"/>
+          <circle cx="258" cy="88" r="0.4" fill="#F8FAFC" opacity="0.15"/>
+          <circle cx="265" cy="185" r="0.5" fill="#F8FAFC" opacity="0.18"/>
+          <circle cx="255" cy="318" r="0.6" fill="#F8FAFC" opacity="0.15"/>
+          <circle cx="18" cy="295" r="0.4" fill="#F8FAFC" opacity="0.2"/>
+          <circle cx="40" cy="355" r="0.5" fill="#F8FAFC" opacity="0.15"/>
+          <circle cx="165" cy="338" r="0.4" fill="#F8FAFC" opacity="0.12"/>
+          <circle cx="88" cy="78" r="0.4" fill="#F8FAFC" opacity="0.1"/>
+          <circle cx="242" cy="148" r="0.5" fill="#F8FAFC" opacity="0.1"/>
+          <!-- Connection lines -->
+          <line x1="205" y1="75" x2="148" y2="105" stroke="#8EA8B4" stroke-width="0.7" opacity="0.52"/>
+          <line x1="148" y1="105" x2="98" y2="162" stroke="#8EA8B4" stroke-width="0.7" opacity="0.52"/>
+          <line x1="98" y1="162" x2="52" y2="242" stroke="#8EA8B4" stroke-width="0.7" opacity="0.48"/>
+          <line x1="205" y1="75" x2="178" y2="192" stroke="#8EA8B4" stroke-width="0.7" opacity="0.48"/>
+          <line x1="178" y1="192" x2="98" y2="162" stroke="#8EA8B4" stroke-width="0.6" opacity="0.42"/>
+          <line x1="178" y1="192" x2="212" y2="262" stroke="#8EA8B4" stroke-width="0.6" opacity="0.38"/>
+          <line x1="98" y1="162" x2="118" y2="252" stroke="#8EA8B4" stroke-width="0.6" opacity="0.38"/>
+          <line x1="118" y1="252" x2="52" y2="242" stroke="#8EA8B4" stroke-width="0.6" opacity="0.35"/>
+          <!-- β Lib — Cyan (innovation/precision) -->
+          <circle cx="205" cy="75" r="19" fill="url(#g-lib-beta)"/>
+          <circle cx="205" cy="75" r="4.8" fill="#00C8E0" opacity="0.95"/>
+          <!-- α Lib — Copper (craft/warmth) -->
+          <circle cx="98" cy="162" r="16" fill="url(#g-lib-alpha)"/>
+          <circle cx="98" cy="162" r="4.2" fill="#C47B3F" opacity="0.9"/>
+          <!-- Other stars -->
+          <circle cx="148" cy="105" r="3.2" fill="#8EA8B4" opacity="0.8"/>
+          <circle cx="52" cy="242" r="3.0" fill="#8EA8B4" opacity="0.75"/>
+          <circle cx="178" cy="192" r="2.8" fill="#8EA8B4" opacity="0.72"/>
+          <circle cx="212" cy="262" r="2.5" fill="#8EA8B4" opacity="0.68"/>
+          <circle cx="118" cy="252" r="2.5" fill="#8EA8B4" opacity="0.68"/>
+          <!-- Labels -->
+          <text x="212" y="70" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#00C8E0" opacity="0.85">&#946; Lib</text>
+          <text x="56" y="158" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#C47B3F" opacity="0.85">&#945; Lib</text>
+          <text x="152" y="101" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.55">&#947; Lib</text>
+          <text x="18" y="255" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.55">&#963; Lib</text>
+          <text x="182" y="188" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.52">&#953; Lib</text>
+          <text x="216" y="258" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.52">&#965; Lib</text>
+          <text x="122" y="264" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.52">&#952; Lib</text>
+          <text x="140" y="400" font-family="Instrument Sans, sans-serif" font-size="12" fill="#F8FAFC" opacity="0.85" text-anchor="middle" font-weight="300" letter-spacing="5">LIBRA</text>
+        </svg>
+      </div>
+
+      <div class="const-divider-v"></div>
+
+      <!-- PEGASYS — Enif: Copper · Markab: Cyan -->
+      <div class="const-diagram">
+        <svg class="const-svg" viewBox="0 0 310 410" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="g-peg-enif" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#C47B3F" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#C47B3F" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="g-peg-mkb" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#00C8E0" stop-opacity="0.42"/>
+              <stop offset="100%" stop-color="#00C8E0" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- Background scatter stars -->
+          <circle cx="14" cy="28" r="0.6" fill="#F8FAFC" opacity="0.25"/>
+          <circle cx="55" cy="52" r="0.4" fill="#F8FAFC" opacity="0.2"/>
+          <circle cx="90" cy="18" r="0.5" fill="#F8FAFC" opacity="0.18"/>
+          <circle cx="222" cy="26" r="0.6" fill="#F8FAFC" opacity="0.2"/>
+          <circle cx="298" cy="58" r="0.4" fill="#F8FAFC" opacity="0.15"/>
+          <circle cx="305" cy="155" r="0.5" fill="#F8FAFC" opacity="0.18"/>
+          <circle cx="298" cy="298" r="0.6" fill="#F8FAFC" opacity="0.15"/>
+          <circle cx="12" cy="268" r="0.4" fill="#F8FAFC" opacity="0.2"/>
+          <circle cx="38" cy="335" r="0.5" fill="#F8FAFC" opacity="0.15"/>
+          <circle cx="198" cy="308" r="0.4" fill="#F8FAFC" opacity="0.12"/>
+          <circle cx="155" cy="362" r="0.5" fill="#F8FAFC" opacity="0.18"/>
+          <circle cx="72" cy="122" r="0.4" fill="#F8FAFC" opacity="0.1"/>
+          <circle cx="240" cy="138" r="0.5" fill="#F8FAFC" opacity="0.1"/>
+          <!-- Connection lines -->
+          <line x1="28" y1="198" x2="88" y2="160" stroke="#8EA8B4" stroke-width="0.7" opacity="0.48"/>
+          <line x1="88" y1="160" x2="118" y2="242" stroke="#8EA8B4" stroke-width="0.7" opacity="0.48"/>
+          <line x1="118" y1="242" x2="102" y2="102" stroke="#8EA8B4" stroke-width="0.7" opacity="0.52"/>
+          <line x1="102" y1="102" x2="258" y2="90" stroke="#8EA8B4" stroke-width="0.7" opacity="0.52"/>
+          <line x1="258" y1="90" x2="265" y2="242" stroke="#8EA8B4" stroke-width="0.7" opacity="0.52"/>
+          <line x1="265" y1="242" x2="118" y2="242" stroke="#8EA8B4" stroke-width="0.7" opacity="0.52"/>
+          <line x1="102" y1="102" x2="182" y2="40" stroke="#8EA8B4" stroke-width="0.6" opacity="0.38"/>
+          <line x1="182" y1="40" x2="258" y2="90" stroke="#8EA8B4" stroke-width="0.6" opacity="0.38"/>
+          <line x1="258" y1="90" x2="242" y2="160" stroke="#8EA8B4" stroke-width="0.6" opacity="0.35"/>
+          <line x1="242" y1="160" x2="265" y2="242" stroke="#8EA8B4" stroke-width="0.6" opacity="0.35"/>
+          <!-- Enif — Copper glow -->
+          <circle cx="28" cy="198" r="19" fill="url(#g-peg-enif)"/>
+          <circle cx="28" cy="198" r="4.8" fill="#C47B3F" opacity="0.95"/>
+          <!-- Markab — Cyan glow -->
+          <circle cx="118" cy="242" r="16" fill="url(#g-peg-mkb)"/>
+          <circle cx="118" cy="242" r="4.2" fill="#00C8E0" opacity="0.9"/>
+          <!-- Other stars -->
+          <circle cx="102" cy="102" r="3.6" fill="#8EA8B4" opacity="0.82"/>
+          <circle cx="258" cy="90" r="3.5" fill="#8EA8B4" opacity="0.82"/>
+          <circle cx="265" cy="242" r="3.2" fill="#8EA8B4" opacity="0.78"/>
+          <circle cx="88" cy="160" r="2.6" fill="#8EA8B4" opacity="0.7"/>
+          <circle cx="182" cy="40" r="2.6" fill="#8EA8B4" opacity="0.7"/>
+          <circle cx="242" cy="160" r="2.2" fill="#8EA8B4" opacity="0.65"/>
+          <!-- Labels -->
+          <text x="36" y="192" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#C47B3F" opacity="0.85">Enif</text>
+          <text x="94" y="156" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.55">Homam</text>
+          <text x="122" y="258" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#00C8E0" opacity="0.85">Markab</text>
+          <text x="52" y="98" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.62">Scheat</text>
+          <text x="148" y="36" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.52">Matar</text>
+          <text x="248" y="154" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.52">Biham</text>
+          <text x="264" y="84" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.62">Alpheratz</text>
+          <text x="270" y="255" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#8EA8B4" opacity="0.58">Algenib</text>
+          <text x="155" y="400" font-family="Instrument Sans, sans-serif" font-size="12" fill="#F8FAFC" opacity="0.85" text-anchor="middle" font-weight="300" letter-spacing="5">PEGASYS</text>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // --- Dual-color constellation network (Copper + Cyan) ---
+    const canvas = document.getElementById('constellation-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      const wrap = canvas.parentElement;
+      canvas.width = wrap.offsetWidth;
+      canvas.height = wrap.offsetHeight;
+    }
+
+    const NODE_COUNT = 42;
+    const CONNECT_DIST = 160;
+    const nodes = [];
+
+    const COPPER = 'rgba(196,123,63,';
+    const CYAN   = 'rgba(0,200,224,';
+    const STEEL  = 'rgba(142,168,180,';
+
+    function initNodes(w, h) {
+      nodes.length = 0;
+      for (let i = 0; i < NODE_COUNT; i++) {
+        const roll = Math.random();
+        const isCyan   = roll > 0.88;
+        const isCopper = roll > 0.76 && roll <= 0.88;
+        nodes.push({
+          x:  Math.random() * w,
+          y:  Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.18,
+          vy: (Math.random() - 0.5) * 0.18,
+          r:  (isCyan || isCopper) ? Math.random() * 2.5 + 1.5 : Math.random() * 1.8 + 0.8,
+          isCyan,
+          isCopper,
+          pulse: Math.random() * Math.PI * 2,
+        });
+      }
+    }
+
+    function draw() {
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // Connection lines
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < CONNECT_DIST) {
+            const alpha = (1 - dist / CONNECT_DIST) * 0.48;
+            const bothCopper = nodes[i].isCopper && nodes[j].isCopper;
+            const bothCyan   = nodes[i].isCyan   && nodes[j].isCyan;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            if (bothCopper) {
+              ctx.strokeStyle = `${COPPER}${alpha * 1.8})`;
+              ctx.lineWidth = 0.8;
+            } else if (bothCyan) {
+              ctx.strokeStyle = `${CYAN}${alpha * 1.6})`;
+              ctx.lineWidth = 0.8;
+            } else {
+              ctx.strokeStyle = `${STEEL}${alpha})`;
+              ctx.lineWidth = 0.5;
+            }
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Nodes
+      nodes.forEach(n => {
+        n.pulse += 0.018;
+        const isAccent = n.isCyan || n.isCopper;
+        const glow = isAccent ? 0.85 + Math.sin(n.pulse) * 0.15 : 1;
+        const color = n.isCyan ? CYAN : (n.isCopper ? COPPER : STEEL);
+
+        if (isAccent) {
+          const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 6);
+          grad.addColorStop(0,   `${color}0.55)`);
+          grad.addColorStop(0.4, `${color}0.18)`);
+          grad.addColorStop(1,   `${color}0)`);
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r * 6, 0, Math.PI * 2);
+          ctx.fillStyle = grad;
+          ctx.fill();
+        }
+
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * glow, 0, Math.PI * 2);
+        ctx.fillStyle = `${color}${isAccent ? 0.95 : 0.75})`;
+        ctx.fill();
+      });
+
+      // Animate
+      nodes.forEach(n => {
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > w) n.vx *= -1;
+        if (n.y < 0 || n.y > h) n.vy *= -1;
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    function init() {
+      resizeCanvas();
+      initNodes(canvas.width, canvas.height);
+      draw();
+    }
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initNodes(canvas.width, canvas.height);
+    });
+
+    setTimeout(init, 100);
+
+    // --- Star field (mixed copper + cyan stars) ---
+    const container = document.getElementById('stars');
+    for (let i = 0; i < 90; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const size = Math.random() * 1.8 + 0.5;
+      const roll = Math.random();
+      const starColor = roll > 0.9 ? '#C47B3F' : (roll > 0.8 ? '#00C8E0' : '#F8FAFC');
+      star.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        top: ${Math.random() * 100}%;
+        left: ${Math.random() * 100}%;
+        opacity: ${Math.random() * 0.2 + 0.04};
+        background: ${starColor};
+      `;
+      container.appendChild(star);
+    }
+  </script>
+
+</body>
+</html>
